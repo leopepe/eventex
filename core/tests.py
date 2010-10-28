@@ -2,7 +2,7 @@ from django.test import TestCase
 
 class HomepageUrlTest(TestCase):
 
-    fixtures = ['initial_data.js']
+    #fixtures = ['initial_data.js']
 
     def setUp(self):
         pass

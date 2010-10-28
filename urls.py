@@ -1,9 +1,8 @@
 from django.conf.urls.defaults import *
-from core.views import *
-from django.conf import settings
 
-# Uncomment the next two lines to enable the admin:
+from django.conf import settings
 from django.contrib import admin
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -16,11 +15,15 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
     
-    (r'^$', homepage),
+    #(r'^$', homepage, {'template': 'index.html'}),
+
+    url(r'^$', 'core.views.homepage', name='homepage'),
+
+    (r'^inscricao/', include('subscription.urls', namespace='subscription')),
 )
+
 if settings.DEBUG:
     urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root' : settings.MEDIA_ROOT}),
     )
-

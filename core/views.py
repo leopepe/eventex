@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response
 from django.conf import settings
 
-def homepage(request):
+def homepage(request, template=None):
     """ 
     #
     # Manual Django render method.
@@ -19,3 +19,4 @@ def homepage(request):
     context = {'MEDIA_URL': settings.MEDIA_URL}
 
     return render_to_response('index.html', context)
+
