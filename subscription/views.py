@@ -22,11 +22,8 @@ def create(request):
     subscription = form.save()
 
     # notifica o cadastro
-    try:
-        send_subscription_email(subscription)
-        return HttpResponseRedirect(reverse('subscription:success', args=[ subscription.pk ]))
-    except:
-        return HttpResponseRedirect(reverse('subscription:notificationFail', args=[subscription.pk]))
+    send_subscription_email(subscription)
+    return HttpResponseRedirect(reverse('subscription:success', args=[ subscription.pk ]))
 
 def subscribe(request):
     if request.method == 'POST':
@@ -34,12 +31,7 @@ def subscribe(request):
     else:
         return new(request)
 
-def success(request, id):
+def success_or_notification_fail(request, id, template='subscription/success.html'):
     subscription = get_object_or_404(Subscription, pk=id)
     context = RequestContext(request, {'subscription': subscription})
-    return render_to_response('subscription/success.html', context)
-
-def notificationFailt(request):
-    subscription = get_object_or_404(Subscription, pk=id)
-    context = RequestContext(request, {'subscription': subscription})
-    return render_to_response('subscription/notificationFail.html', context)
+    return render_to_response(template, context)

@@ -19,4 +19,5 @@ def send_subscription_email(subscription):
         message = message,
         from_email = settings.DEFAULT_FROM_EMAIL,
         recipient_list = [ subscription.email ],
+        fail_silently=True
     )
