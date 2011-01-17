@@ -7,6 +7,7 @@ from subscription.forms import SubscriptionForm
 from subscription.models import Subscription
 from subscription.utils import send_subscription_email
 
+
 def new(request):
     form = SubscriptionForm()
     context = RequestContext(request, {'form': form})
@@ -20,7 +21,6 @@ def create(request):
         return render_to_response('subscription/new.html', context)
 
     subscription = form.save()
-
     # notifica o cadastro
     send_subscription_email(subscription)
     return HttpResponseRedirect(reverse('subscription:success', args=[ subscription.pk ]))
@@ -31,7 +31,8 @@ def subscribe(request):
     else:
         return new(request)
 
-def success_or_notification_fail(request, id, template='subscription/success.html'):
+
+def success(request, id):
     subscription = get_object_or_404(Subscription, pk=id)
     context = RequestContext(request, {'subscription': subscription})
-    return render_to_response(template, context)
+    return render_to_response('subscription/success.html', context)
